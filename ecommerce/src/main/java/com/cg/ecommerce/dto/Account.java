@@ -5,26 +5,60 @@ package com.cg.ecommerce.dto;
 
 import java.math.BigInteger;
 
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+
 /**
  * @author Admin
  *
  */
+
+@Entity(name="account")
+
 public class Account {
 
 	/**
 	 * 
 	 */
-	
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "account_id")
+	@NotEmpty(message="Account Id cannot be empty")
+	private Long accountId;
+	@Column(name = "username")
+	@NotEmpty(message="Username cannot be empty")
+	private String username;
+	@Column(name = "password")
+	@NotEmpty(message="password cannot be empty")
+	private String password;
+	@Column(name = "account_type")
+	@NotEmpty(message="Account Type cannot be empty")
 	private String accountType;
+	@Column(name = "first_name")
+	@NotEmpty(message="First name cannot be empty")
 	private String firstName;
+	@Column(name = "last_name")
+	@NotEmpty(message="Last Name cannot be empty")
 	private String lastName;
+	@Column(name = "phone_number")
+	@NotEmpty(message="Phone Number cannot be empty")
 	private BigInteger phoneNumber;
+	@Column(name = "email_id")
+	@NotEmpty(message="Account Id cannot be empty")
 	private String emailId;
+
 	
-	Address address;
 	
-	User userId;
+	@Embedded
+	private Address address;
+	
+	
 	
 	
 		
@@ -34,112 +68,6 @@ public class Account {
 
 
 
-	public Account(String accountType, String firstName, String lastName, BigInteger phoneNumber, String emailId,
-			Address address, User userId) {
-		super();
-		this.accountType = accountType;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
-		this.emailId = emailId;
-		this.address = address;
-		this.userId = userId;
-	}
-
-
-
-	public String getAccountType() {
-		return accountType;
-	}
-
-
-
-	public void setAccountType(String accountType) {
-		this.accountType = accountType;
-	}
-
-
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-
-
-	public String getLastName() {
-		return lastName;
-	}
-
-
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-
-
-	public BigInteger getPhoneNumber() {
-		return phoneNumber;
-	}
-
-
-
-	public void setPhoneNumber(BigInteger phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
-
-
-	public Address getAddress() {
-		return address;
-	}
-
-
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-
-
-	public User getUserId() {
-		return userId;
-	}
-
-
-
-	public void setUserId(User userId) {
-		this.userId = userId;
-	}
-
-
-
-	@Override
-	public String toString() {
-		return "Account [accountType=" + accountType + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", phoneNumber=" + phoneNumber + ", emailId=" + emailId + ", address=" + address + ", userId="
-				+ userId + "]";
-	}
-
-	
 	
 	
 	

@@ -3,10 +3,15 @@
  */
 package com.cg.ecommerce.dto;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * @author Admin
  *
  */
+@Entity(name="product")
 public class Product {
 
 	/**
@@ -15,11 +20,17 @@ public class Product {
 	
 	
 	
-	
+	@Id
+	@Column(name="product_id")
 	private Long productId;
+	@Column(name="product_name")
 	private String productName;
+	@Column(name="product_price")
 	private Double productPrice;
+	@Column(name="product_description")
 	private String productDescription;
+	@Column(name="product_state")
+	private boolean productState;
 	
 	
 	

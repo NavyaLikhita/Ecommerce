@@ -3,10 +3,15 @@
  */
 package com.cg.ecommerce.dto;
 
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 /**
  * @author Admin
  *
  */
+@Embeddable
 public class Address {
 
 	/**
@@ -14,10 +19,12 @@ public class Address {
 	 */
 	
 	
-	
+	@NotEmpty(message="Street Cannot be empty")
 	private String streetLine1;
 	private String streetLine2;
+	@NotEmpty(message="Zipcode Cannot be empty")
 	private Long zipCode;
+	@NotEmpty(message="State Cannot be empty")
 	private String state;
 	
 	public Address() {
