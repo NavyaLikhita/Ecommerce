@@ -11,11 +11,10 @@ import com.cg.ecommerce.dto.Product;
  */
 public interface ProductService {
 
-	public Product addProduct();
+	public Product addProduct(Product product);
 
-	public Product searchProduct(Long productId);
-
-	public Product modifyProduct(Product productId);
+	
+	public Product modifyProduct(Product product);
 
 	public boolean removeProduct(Long productId);
 

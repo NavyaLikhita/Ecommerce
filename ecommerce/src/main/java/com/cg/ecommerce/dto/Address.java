@@ -5,10 +5,10 @@ package com.cg.ecommerce.dto;
 
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+
 
 /**
- * @author Admin
+ * @author NAVYA
  *
  */
 @Embeddable

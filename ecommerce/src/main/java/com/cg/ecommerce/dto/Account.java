@@ -4,18 +4,23 @@
 package com.cg.ecommerce.dto;
 
 import java.math.BigInteger;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 import javax.validation.constraints.NotEmpty;
 
 /**
- * @author Admin
+ * @author NAVYA
  *
  */
 
@@ -54,10 +59,11 @@ public class Account {
 	private String emailId;
 
 	
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	private List<Product> cart;
 	
-	@Embedded
-	private Address address;
-	
+	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "order")
+	private List<Order> orders;
 	
 	
 	
@@ -68,10 +74,182 @@ public class Account {
 
 
 
-	
-	
-	
-	
+
+	public Account(@NotEmpty(message = "Account Id cannot be empty") Long accountId,
+			@NotEmpty(message = "Username cannot be empty") String username,
+			@NotEmpty(message = "password cannot be empty") String password,
+			@NotEmpty(message = "Account Type cannot be empty") String accountType,
+			@NotEmpty(message = "First name cannot be empty") String firstName,
+			@NotEmpty(message = "Last Name cannot be empty") String lastName,
+			@NotEmpty(message = "Phone Number cannot be empty") BigInteger phoneNumber,
+			@NotEmpty(message = "Account Id cannot be empty") String emailId, List<Product> cart, List<Order> orders) {
+		super();
+		this.accountId = accountId;
+		this.username = username;
+		this.password = password;
+		this.accountType = accountType;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+		this.emailId = emailId;
+		this.cart = cart;
+		this.orders = orders;
+	}
+
+
+
+
+	public Long getAccountId() {
+		return accountId;
+	}
+
+
+
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
+
+
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+
+
+	public String getAccountType() {
+		return accountType;
+	}
+
+
+
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+
+
+
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+
+
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+
+
+
+	public String getLastName() {
+		return lastName;
+	}
+
+
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+
+
+	public BigInteger getPhoneNumber() {
+		return phoneNumber;
+	}
+
+
+
+
+	public void setPhoneNumber(BigInteger phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+
+
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+
+
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+
+
+
+	public List<Product> getCart() {
+		return cart;
+	}
+
+
+
+
+	public void setCart(List<Product> cart) {
+		this.cart = cart;
+	}
+
+
+
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+
+
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "Account [accountId=" + accountId + ", username=" + username + ", password=" + password
+				+ ", accountType=" + accountType + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", phoneNumber=" + phoneNumber + ", emailId=" + emailId + ", cart=" + cart + ", orders=" + orders
+				+ "]";
+	}
+
+
+
+
 	
 	
 	

@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * @author Admin
+ * @author NAVYA
  *
  */
 @Entity(name="product")
@@ -40,12 +40,14 @@ public class Product {
 
 
 
-	public Product(Long productId, String productName, Double productPrice, String productDescription) {
+	public Product(Long productId, String productName, Double productPrice, String productDescription,
+			boolean productState) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
 		this.productPrice = productPrice;
 		this.productDescription = productDescription;
+		this.productState = productState;
 	}
 
 
@@ -98,16 +100,26 @@ public class Product {
 
 
 
+	public boolean isProductState() {
+		return productState;
+	}
+
+
+
+	public void setProductState(boolean productState) {
+		this.productState = productState;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", productName=" + productName + ", productPrice=" + productPrice
-				+ ", productDescription=" + productDescription + "]";
+				+ ", productDescription=" + productDescription + ", productState=" + productState + "]";
 	}
 
-	
-	
-	
-	
+
+
 	
 	
 	

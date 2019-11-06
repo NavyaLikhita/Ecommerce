@@ -3,41 +3,51 @@
  */
 package com.cg.ecommerce.service;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.cg.ecommerce.dto.Product;
+import com.cg.ecommerce.repository.ProductRepository;
 
 /**
- * @author Admin
+ * @author NAVYA
  *
  */
+
+@Service("productService")
+@Transactional
 public class ProductServiceImpl implements ProductService {
 
 	
+	
+	@Autowired
+	ProductRepository productRepository;
+	
+	
 	@Override
-	public Product addProduct() {
+	public Product addProduct(Product product) {
 		// TODO Auto-generated method stub
 		
 		
 		
 		
-		return null;
+		return productRepository.save(product);
 	}
 
-	@Override
-	public Product searchProduct(Long productId) {
-		// TODO Auto-generated method stub
-		
-		
-		
-		return null;
-	}
+	
 
 	@Override
-	public Product modifyProduct(Product productId) {
+	public Product modifyProduct(Product product) {
 		// TODO Auto-generated method stub
+		Product productToBeModified=productRepository.findById(product.getProductId());
+		productToBeModified.setProductName(product.getProductName());
+		productToBeModified.setProductPrice(product.getProductPrice());
+		productToBeModified.setProductDescription(product.getProductDescription());
 		
 		
-		
-		return null;
+		return productRepository.save(productToBeModified);
 	}
 
 	@Override
