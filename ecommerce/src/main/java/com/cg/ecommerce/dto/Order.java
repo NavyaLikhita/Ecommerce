@@ -19,12 +19,15 @@ import javax.persistence.ManyToOne;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author NAVYA
  *
  */
-@Entity(name="order")
+@Entity(name="orders")
 public class Order {
 
 	/**
@@ -35,19 +38,27 @@ public class Order {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	
 	@Column(name = "order_id")
 	private Long orderId;
 	
-	@Embedded
-	private Address shipmentAddress;
+	@Column(name="street_line_1",insertable = false, updatable = false)
+	@NotEmpty(message="Street Cannot be empty")
+	private String streetLine1;
+	@Column(name="street_line_2",insertable = false, updatable = false)
+	private String streetLine2;
+	@Column(name="zipcode",insertable = false, updatable = false)
+	@NotEmpty(message="Zipcode Cannot be empty")
+	private Long zipCode;
+	@Column(name="state",insertable = false, updatable = false)
+	@NotEmpty(message="State Cannot be empty")
+	private String state;
 	
 	@Column(name="ordered_date_time")
-	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "mm-dd-yyyy HH:mm:ss")
 	private Date orderedDateTime;
 	
 	@Column(name="local_date_time")
-	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "mm-dd-yyyy HH:mm:ss")
 	private LocalDateTime expectedArrivalTime;
 	@Column(name="order_status")
 	private String orderStatus;
@@ -62,11 +73,16 @@ public class Order {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Order(Long orderId, Address shipmentAddress, Date orderedDateTime, LocalDateTime expectedArrivalTime,
-			String orderStatus, boolean payment, Account account) {
+	public Order(Long orderId, @NotEmpty(message = "Street Cannot be empty") String streetLine1, String streetLine2,
+			@NotEmpty(message = "Zipcode Cannot be empty") Long zipCode,
+			@NotEmpty(message = "State Cannot be empty") String state, Date orderedDateTime,
+			LocalDateTime expectedArrivalTime, String orderStatus, boolean payment, Account account) {
 		super();
 		this.orderId = orderId;
-		this.shipmentAddress = shipmentAddress;
+		this.streetLine1 = streetLine1;
+		this.streetLine2 = streetLine2;
+		this.zipCode = zipCode;
+		this.state = state;
 		this.orderedDateTime = orderedDateTime;
 		this.expectedArrivalTime = expectedArrivalTime;
 		this.orderStatus = orderStatus;
@@ -82,12 +98,36 @@ public class Order {
 		this.orderId = orderId;
 	}
 
-	public Address getShipmentAddress() {
-		return shipmentAddress;
+	public String getStreetLine1() {
+		return streetLine1;
 	}
 
-	public void setShipmentAddress(Address shipmentAddress) {
-		this.shipmentAddress = shipmentAddress;
+	public void setStreetLine1(String streetLine1) {
+		this.streetLine1 = streetLine1;
+	}
+
+	public String getStreetLine2() {
+		return streetLine2;
+	}
+
+	public void setStreetLine2(String streetLine2) {
+		this.streetLine2 = streetLine2;
+	}
+
+	public Long getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(Long zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	public Date getOrderedDateTime() {
@@ -132,13 +172,13 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [orderId=" + orderId + ", shipmentAddress=" + shipmentAddress + ", orderedDateTime="
-				+ orderedDateTime + ", expectedArrivalTime=" + expectedArrivalTime + ", orderStatus=" + orderStatus
-				+ ", payment=" + payment + ", account=" + account + "]";
+		return "Order [orderId=" + orderId + ", streetLine1=" + streetLine1 + ", streetLine2=" + streetLine2
+				+ ", zipCode=" + zipCode + ", state=" + state + ", orderedDateTime=" + orderedDateTime
+				+ ", expectedArrivalTime=" + expectedArrivalTime + ", orderStatus=" + orderStatus + ", payment="
+				+ payment + ", account=" + account + "]";
 	}
 
 	
-
 
 
 	

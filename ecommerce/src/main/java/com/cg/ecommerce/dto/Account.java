@@ -62,8 +62,8 @@ public class Account {
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<Product> cart;
 	
-	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "order")
-	private List<Order> orders;
+	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "account")
+	private List<Order> order;
 	
 	
 	
@@ -82,7 +82,7 @@ public class Account {
 			@NotEmpty(message = "First name cannot be empty") String firstName,
 			@NotEmpty(message = "Last Name cannot be empty") String lastName,
 			@NotEmpty(message = "Phone Number cannot be empty") BigInteger phoneNumber,
-			@NotEmpty(message = "Account Id cannot be empty") String emailId, List<Product> cart, List<Order> orders) {
+			@NotEmpty(message = "Account Id cannot be empty") String emailId, List<Product> cart, List<Order> order) {
 		super();
 		this.accountId = accountId;
 		this.username = username;
@@ -93,7 +93,7 @@ public class Account {
 		this.phoneNumber = phoneNumber;
 		this.emailId = emailId;
 		this.cart = cart;
-		this.orders = orders;
+		this.order = order;
 	}
 
 
@@ -225,15 +225,15 @@ public class Account {
 
 
 
-	public List<Order> getOrders() {
-		return orders;
+	public List<Order> getOrder() {
+		return order;
 	}
 
 
 
 
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
+	public void setOrder(List<Order> order) {
+		this.order = order;
 	}
 
 
@@ -243,9 +243,13 @@ public class Account {
 	public String toString() {
 		return "Account [accountId=" + accountId + ", username=" + username + ", password=" + password
 				+ ", accountType=" + accountType + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", phoneNumber=" + phoneNumber + ", emailId=" + emailId + ", cart=" + cart + ", orders=" + orders
-				+ "]";
+				+ ", phoneNumber=" + phoneNumber + ", emailId=" + emailId + ", cart=" + cart + ", order=" + order + "]";
 	}
+
+
+
+
+	
 
 
 

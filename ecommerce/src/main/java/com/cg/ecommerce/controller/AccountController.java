@@ -10,9 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +22,7 @@ import com.cg.ecommerce.dto.Account;
 import com.cg.ecommerce.dto.Order;
 import com.cg.ecommerce.dto.Product;
 import com.cg.ecommerce.exception.AccountException;
-import com.cg.ecommerce.exception.ProductException;
+
 import com.cg.ecommerce.service.AccountService;
 
 
@@ -106,9 +106,34 @@ if(productListToBeAdded.isEmpty()) {
 		
 		List<Product> productList=accountService.viewProductsInCart();
 		
+if(productList.isEmpty()) {
+			
+			return new ResponseEntity("No Orders Present", HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}else
+		
+		return  new ResponseEntity<List<Product>>(productList,HttpStatus.OK); 
+			
+		
+		
+		
+	
+	}
+		
+			
+		
+		
+		
+	
+	
+	@GetMapping(value="/cart/view")
+	public ResponseEntity<?> showPrice() throws AccountException{
+		
 		Double totalPrice=accountService.showTotalPrice();
 		
-		return null;			//return Price??
+		
+		
+		return new ResponseEntity<Double>(totalPrice,HttpStatus.OK);			//return Price??
 		
 		
 		
