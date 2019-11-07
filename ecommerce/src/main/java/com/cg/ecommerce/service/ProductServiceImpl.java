@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.ecommerce.dto.Product;
+
+import com.cg.ecommerce.exception.ProductException;
 import com.cg.ecommerce.repository.ProductRepository;
 
 /**
@@ -29,19 +31,26 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product addProduct(Product product) {
 		// TODO Auto-generated method stub
+
 		
-		
-		
-		
+		product.setProductState(true);
 		return productRepository.save(product);
 	}
 
 	
 
 	@Override
-	public Product modifyProduct(Product product) {
+	public Product modifyProduct(Product product) throws ProductException {
 		// TODO Auto-generated method stub
-		Product productToBeModified=productRepository.findById(product.getProductId());
+		Product productToBeModified=productRepository.findByProductId(product.getProductId());
+		
+if(productToBeModified==null) {
+			
+			throw new ProductException("Order Not Found");
+			
+		}
+		
+		
 		productToBeModified.setProductName(product.getProductName());
 		productToBeModified.setProductPrice(product.getProductPrice());
 		productToBeModified.setProductDescription(product.getProductDescription());

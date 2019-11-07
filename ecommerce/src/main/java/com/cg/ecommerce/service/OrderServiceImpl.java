@@ -11,9 +11,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cg.ecommerce.dto.Account;
-
 import com.cg.ecommerce.dto.Order;
+import com.cg.ecommerce.exception.OrderException;
 import com.cg.ecommerce.repository.AccountRepository;
 
 import com.cg.ecommerce.repository.OrderRepository;
@@ -25,15 +24,13 @@ import com.cg.ecommerce.repository.OrderRepository;
 
 @Service("orderService")
 @Transactional
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
-	
 	@Autowired
 	OrderRepository orderRepository;
 	@Autowired
 	AccountRepository accountRepository;
-	
-	
+
 	@Override
 	public Order addOrder(Order order) {
 		// TODO Auto-generated method stub
@@ -41,49 +38,58 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public List<Order> showAllOrder() {
+	public List<Order> showAllOrder() throws OrderException {
 		// TODO Auto-generated method stub
+
 		
-		
-		return orderRepository.findAll();
+		List<Order> orderList=orderRepository.findAll();
+		if(orderList.isEmpty()) {
+			
+			throw new OrderException("There Are No Orders");
+			
+		}
+		else
+		return orderList;
 	}
 
 	@Override
-	public Order viewOrder(Long orderId) {
+	public Order viewOrder(Long orderId) throws OrderException {
 		// TODO Auto-generated method stub
-		return orderRepository.findById(orderId);
+		
+		
+		Order orderFound=orderRepository.findByOrderId(orderId);
+		if(orderFound==null) {
+			
+			throw new OrderException("Order Not Found");
+			
+		}
+		
+		
+		return orderFound;
 	}
 
-	
-
 	@Override
-	public List<Order> showAllOrdersInSpecifiedTimeBetween(Date dateTime1, Date dateTime2) {
+	public List<Order> showAllOrdersInSpecifiedTimeBetween(Date dateTime1, Date dateTime2) throws OrderException {
 		// TODO Auto-generated method stub
+		List<Order> orderList=orderRepository.findAllByOrdersInSpecifiedTimeBetween(dateTime1, dateTime2);
+
+		if(orderList.isEmpty()) {
+			
+			throw new OrderException("No Orders Are There In Given Time");
+		}
 		
-		
-		
-		
-		return orderRepository.findAllByOrdersInSpecifiedTimeBetween(dateTime1,dateTime2);					//see how 
+		return orderList; // see how
 	}
 
 	@Override
 	public Order modifyOrder(Order order) {
 		// TODO Auto-generated method stub
-		
 
-		
-		
 		return null;
 	}
 
 	/**
 	 * 
 	 */
-	
-	
-	
-	
-
-	
 
 }

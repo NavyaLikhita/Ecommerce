@@ -16,6 +16,8 @@ import com.cg.ecommerce.dto.Product;
 @Repository("productRepository")
 public interface ProductRepository extends JpaRepository<Product,Long> {
 
+	Product findByProductId(Long productId);
+
 	
 	
 	

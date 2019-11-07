@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cg.ecommerce.dto.Account;
 import com.cg.ecommerce.dto.Order;
 import com.cg.ecommerce.dto.Product;
+import com.cg.ecommerce.exception.AccountException;
+import com.cg.ecommerce.exception.ProductException;
 import com.cg.ecommerce.service.AccountService;
 
 
@@ -41,13 +43,17 @@ public class AccountController {
 	
 	
 	@PostMapping(value = "/add")
-	public ResponseEntity<?> addAccount(@RequestBody Account account) {
+	public ResponseEntity<?> addAccount(@RequestBody Account account) throws AccountException {
 		
 		Account accountToBeAdded=accountService.addAccount(account);
 		
-		return null; 
+		if(accountToBeAdded==null) {
+			
+			return new ResponseEntity("Account Not Added", HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}else
 		
-		
+		return  new ResponseEntity<Account>(accountToBeAdded,HttpStatus.OK); 
 			
 		
 	}
@@ -55,10 +61,17 @@ public class AccountController {
 	
 	
 	@GetMapping(value="/view")
-	public ResponseEntity<?> viewMyOrder(){
+	public ResponseEntity<?> viewMyOrder() throws AccountException{
 		
 		List<Order> orderList=accountService.viewMyOrders();
-		return null;
+if(orderList.isEmpty()) {
+			
+			return new ResponseEntity("No Orders Present", HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}else
+		
+		return  new ResponseEntity<List<Order>>(orderList,HttpStatus.OK); 
+			
 		
 		
 		
@@ -66,16 +79,22 @@ public class AccountController {
 	
 	
 	@PostMapping(value="/cart/add")
-	public ResponseEntity<?> addToCart(@RequestParam Long productId){
+	public ResponseEntity<?> addToCart(@RequestParam Long productId) throws AccountException{
 		
 		List<Product> productListToBeAdded=accountService.addProductToCart(productId);
 		
+if(productListToBeAdded.isEmpty()) {
+			
+			return new ResponseEntity("No Product Present", HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}else
+		
+		return  new ResponseEntity<List<Product>>(productListToBeAdded,HttpStatus.OK); 
 		
 		
 		
 		
 		
-		return null;
 		
 		
 		
@@ -83,13 +102,13 @@ public class AccountController {
 	
 	
 	@GetMapping(value="/cart/view")
-	public ResponseEntity<?> viewCart(){
+	public ResponseEntity<?> viewCart() throws AccountException{
 		
 		List<Product> productList=accountService.viewProductsInCart();
 		
 		Double totalPrice=accountService.showTotalPrice();
 		
-		return null;
+		return null;			//return Price??
 		
 		
 		
@@ -98,9 +117,12 @@ public class AccountController {
 	
 	
 @DeleteMapping(value="/cart/remove")
-public ResponseEntity<?> removeFromCart(@RequestParam Long productId){
+public ResponseEntity<?> removeFromCart(@RequestParam Long productId) throws AccountException{
 	
-	List<Product> productList=accountService.removeProductFromCart(productId);
+	List<Product> productList = accountService.removeProductFromCart(productId);
+	
+	
+	return new ResponseEntity<List<Product>>(productList,HttpStatus.OK); 
 	
 	
 	

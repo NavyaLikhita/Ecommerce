@@ -9,6 +9,7 @@ import java.util.List;
 import com.cg.ecommerce.dto.Account;
 
 import com.cg.ecommerce.dto.Order;
+import com.cg.ecommerce.exception.OrderException;
 
 /**
  * @author NAVYA
@@ -18,15 +19,15 @@ public interface OrderService {
 
 	public Order addOrder(Order order);
 
-	public List<Order> showAllOrder();
+	public List<Order> showAllOrder() throws OrderException;
 
-	public Order viewOrder(Long orderId);
+	public Order viewOrder(Long orderId) throws OrderException;
 
 	
 
-	public List<Order> showAllOrdersInSpecifiedTimeBetween(Date dateTime1,Date dateTime2);
+	public List<Order> showAllOrdersInSpecifiedTimeBetween(Date dateTime1,Date dateTime2) throws OrderException;
 	
-	public Order modifyOrder(Order order);
+	public Order modifyOrder(Order order) throws OrderException;
 
 	//public boolean cancelOrder(Long orderId);
 

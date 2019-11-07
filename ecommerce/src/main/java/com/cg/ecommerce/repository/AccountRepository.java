@@ -9,12 +9,14 @@ import org.springframework.stereotype.Repository;
 import com.cg.ecommerce.dto.Account;
 
 /**
- * @author Navya
+ * @author NAVYA
  *
  */
 
 @Repository("accountRepository")
 public interface AccountRepository extends JpaRepository<Account,Long> {
+
+	Account findByAccountId(Long accountId);
 
 	
 	

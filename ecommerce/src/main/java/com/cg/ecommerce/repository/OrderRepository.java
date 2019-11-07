@@ -22,6 +22,8 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 	
 	//@Query.....
 	List<Order> findAllByOrdersInSpecifiedTimeBetween(Date dateTime1,Date dateTime2);
+
+	Order findByOrderId(Long orderId);
 	
 
 	
