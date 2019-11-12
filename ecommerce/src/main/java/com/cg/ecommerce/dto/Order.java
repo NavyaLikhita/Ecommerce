@@ -41,15 +41,15 @@ public class Order {
 	@Column(name = "order_id")
 	private Long orderId;
 	
-	@Column(name="street_line_1",insertable = false, updatable = false)
+	@Column(name="street_line_1")
 	@NotEmpty(message="Street Cannot be empty")
 	private String streetLine1;
-	@Column(name="street_line_2",insertable = false, updatable = false)
+	@Column(name="street_line_2")
 	private String streetLine2;
-	@Column(name="zipcode",insertable = false, updatable = false)
+	@Column(name="zipcode")
 	@NotEmpty(message="Zipcode Cannot be empty")
 	private Long zipCode;
-	@Column(name="state",insertable = false, updatable = false)
+	@Column(name="state")
 	@NotEmpty(message="State Cannot be empty")
 	private String state;
 	

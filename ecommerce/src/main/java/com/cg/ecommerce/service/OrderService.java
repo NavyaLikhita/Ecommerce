@@ -25,7 +25,7 @@ public interface OrderService {
 
 	
 
-	public List<Order> showAllOrdersInSpecifiedTimeBetween(Date dateTime1,Date dateTime2) throws OrderException;
+	//public List<Order> showAllOrdersInSpecifiedTimeBetween(Date dateTime1,Date dateTime2) throws OrderException;
 	
 	public Order modifyOrder(Order order) throws OrderException;
 

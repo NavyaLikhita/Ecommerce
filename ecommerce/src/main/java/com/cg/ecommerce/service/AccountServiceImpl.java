@@ -3,15 +3,19 @@
  */
 package com.cg.ecommerce.service;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.ecommerce.config.AuditAwareConfiguration;
 import com.cg.ecommerce.dto.Account;
 
 import com.cg.ecommerce.dto.Order;
@@ -35,6 +39,8 @@ public class AccountServiceImpl implements AccountService {
 	 * 
 	 */
 
+	private static final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
+	
 	@Autowired
 	AccountRepository accountRepository;
 	@Autowired
@@ -42,13 +48,14 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	ProductRepository productRepository;
 
-	List<Product> productList;
+	List<Product> productList=new ArrayList<Product>();
+	List<Order> orderList=new ArrayList<Order>();
 
 	@Override
 	public List<Order> viewMyOrders() {
 		// TODO Auto-generated method stub
 
-		List<Order> orderList = orderRepository.findAll();
+		
 
 		return orderList;
 	}
@@ -83,18 +90,21 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public List<Product> addProductToCart(Long productId) throws AccountException {
+	public List<Product> addProductToCart(Product product) throws AccountException {
 		// TODO Auto-generated method stub
 
-		Product productToBeAdded = productRepository.findByProductId(productId);
+		Product productToBeAdded = productRepository.findByProductId(product.getProductId());
+		
 		if (productToBeAdded == null) {
 
 			throw new AccountException("Product Not Available");
 
 		} else {
-
+			
 			productList.add(productToBeAdded);
 
+			
+			
 			return productList; // add to list of products in account
 		}
 
@@ -120,6 +130,7 @@ public class AccountServiceImpl implements AccountService {
 			if (productFound.getProductId().equals(productId)) {
 
 				iterator.remove();
+				break;
 
 			}else {
 				
@@ -155,4 +166,41 @@ public class AccountServiceImpl implements AccountService {
 		return false;
 	}
 
+	@Override
+	public List<Order> addMyOrder(Order order) throws AccountException {
+		// TODO Auto-generated method stub
+		Order orderToBeAdded = orderRepository.findByOrderId(order.getOrderId());
+		if (orderToBeAdded == null) {
+
+			throw new AccountException("Order Not Available");
+
+		} else {
+
+			orderList.add(orderToBeAdded);
+
+			return orderList; // add to list of products in account
+		}
+
+	}
+
+	@Override
+	public Account persistProductList(Account account) {
+		// TODO Auto-generated method stub
+		account.setProductList(productList);
+		
+		
+		
+		return accountRepository.save(account);
+	}
+
+	@Override
+	public Account searchAccount(Long accountId) {
+		// TODO Auto-generated method stub
+		
+		Account accountToBeFound=accountRepository.findByAccountId(accountId);
+		
+		return accountToBeFound;
+	}
+
+	
 }

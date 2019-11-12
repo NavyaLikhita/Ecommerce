@@ -21,9 +21,9 @@ import com.cg.ecommerce.dto.Order;
 @Repository("orderRepository")
 public interface OrderRepository extends JpaRepository<Order,Long> {
 
-	
-	@Query("SELECT o FROM Order WHERE orderedDateTime BETWEEN :dateTime1 AND :dateTime2")
-	List<Order> findAllByOrdersInSpecifiedTimeBetween(@Param(value = "dateTime1") Date dateTime1,@Param(value = "dateTime2") Date dateTime2);
+//	
+//	@Query("SELECT o FROM Order WHERE o.orderedDateTime BETWEEN :dateTime1 AND :dateTime2")
+//	List<Order> findAllByOrdersInSpecifiedTimeBetween(@Param(value = "dateTime1") Date dateTime1,@Param(value = "dateTime2") Date dateTime2);
 
 	Order findByOrderId(Long orderId);
 	

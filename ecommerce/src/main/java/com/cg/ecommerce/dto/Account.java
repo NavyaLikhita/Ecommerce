@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author NAVYA
@@ -34,7 +35,6 @@ public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "account_id")
-	@NotEmpty(message="Account Id cannot be empty")
 	private Long accountId;
 	@Column(name = "username")
 	@NotEmpty(message="Username cannot be empty")
@@ -52,18 +52,18 @@ public class Account {
 	@NotEmpty(message="Last Name cannot be empty")
 	private String lastName;
 	@Column(name = "phone_number")
-	@NotEmpty(message="Phone Number cannot be empty")
-	private BigInteger phoneNumber;
+	@NotNull(message="Phone Number cannot be empty")
+	private Long phoneNumber;
 	@Column(name = "email_id")
 	@NotEmpty(message="Account Id cannot be empty")
 	private String emailId;
 
 	
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	private List<Product> cart;
+	private List<Product> productList;
 	
 	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "account")
-	private List<Order> order;
+	private List<Order> orderList;
 	
 	
 	
@@ -75,14 +75,14 @@ public class Account {
 
 
 
-	public Account(@NotEmpty(message = "Account Id cannot be empty") Long accountId,
-			@NotEmpty(message = "Username cannot be empty") String username,
+	public Account(Long accountId, @NotEmpty(message = "Username cannot be empty") String username,
 			@NotEmpty(message = "password cannot be empty") String password,
 			@NotEmpty(message = "Account Type cannot be empty") String accountType,
 			@NotEmpty(message = "First name cannot be empty") String firstName,
 			@NotEmpty(message = "Last Name cannot be empty") String lastName,
-			@NotEmpty(message = "Phone Number cannot be empty") BigInteger phoneNumber,
-			@NotEmpty(message = "Account Id cannot be empty") String emailId, List<Product> cart, List<Order> order) {
+			@NotNull(message = "Phone Number cannot be empty") Long phoneNumber,
+			@NotEmpty(message = "Account Id cannot be empty") String emailId, List<Product> productList,
+			List<Order> orderList) {
 		super();
 		this.accountId = accountId;
 		this.username = username;
@@ -92,8 +92,8 @@ public class Account {
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
 		this.emailId = emailId;
-		this.cart = cart;
-		this.order = order;
+		this.productList = productList;
+		this.orderList = orderList;
 	}
 
 
@@ -183,14 +183,14 @@ public class Account {
 
 
 
-	public BigInteger getPhoneNumber() {
+	public Long getPhoneNumber() {
 		return phoneNumber;
 	}
 
 
 
 
-	public void setPhoneNumber(BigInteger phoneNumber) {
+	public void setPhoneNumber(Long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
@@ -211,29 +211,29 @@ public class Account {
 
 
 
-	public List<Product> getCart() {
-		return cart;
+	public List<Product> getProductList() {
+		return productList;
 	}
 
 
 
 
-	public void setCart(List<Product> cart) {
-		this.cart = cart;
+	public void setProductList(List<Product> productList) {
+		this.productList = productList;
 	}
 
 
 
 
-	public List<Order> getOrder() {
-		return order;
+	public List<Order> getOrderList() {
+		return orderList;
 	}
 
 
 
 
-	public void setOrder(List<Order> order) {
-		this.order = order;
+	public void setOrderList(List<Order> orderList) {
+		this.orderList = orderList;
 	}
 
 
@@ -243,12 +243,14 @@ public class Account {
 	public String toString() {
 		return "Account [accountId=" + accountId + ", username=" + username + ", password=" + password
 				+ ", accountType=" + accountType + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", phoneNumber=" + phoneNumber + ", emailId=" + emailId + ", cart=" + cart + ", order=" + order + "]";
+				+ ", phoneNumber=" + phoneNumber + ", emailId=" + emailId + ", productList=" + productList
+				+ ", orderList=" + orderList + "]";
 	}
 
 
 
 
+	
 	
 
 
