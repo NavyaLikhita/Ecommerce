@@ -55,7 +55,7 @@ public class ProductController {
 		Product productToBeAdded=productService.addProduct(product);
 		
 		
-		return null;
+		return new ResponseEntity<Product>(productToBeAdded, HttpStatus.OK);
 		
 		
 		
@@ -73,7 +73,7 @@ public class ProductController {
 		logger.info("in modify product");
 		
 		Product productToBeModified=productService.addProduct(product);
-		return null;
+		return new ResponseEntity<Product>(productToBeModified, HttpStatus.OK);
 		
 		
 		

@@ -67,7 +67,7 @@ public class AccountController {
 		Account accountToBeAdded=accountService.addAccount(account);
 		
 		if(accountToBeAdded==null) {
-			
+			logger.warn("account not added");
 			return new ResponseEntity("Account Not Added", HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}else
@@ -78,7 +78,7 @@ public class AccountController {
 	}
 	
 	/*
-	 * Author: NAVYA Description:displays orders of the account
+	 * Author: NAVYA Description: displays orders of the account
 	 */
 	
 	@GetMapping(value="/view")
@@ -87,7 +87,7 @@ public class AccountController {
 		logger.info("in view my orders");
 		List<Order> orderList=accountService.viewMyOrders();
 if(orderList.isEmpty()) {
-			
+	logger.warn("order not added");
 			return new ResponseEntity("No Orders Present", HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}else
@@ -100,7 +100,7 @@ if(orderList.isEmpty()) {
 	}
 	
 	/*
-	 * Author: NAVYA Description:adds products to cart
+	 * Author: NAVYA Description: adds products to cart
 	 */
 	@PostMapping(value="/cart/add")
 	public ResponseEntity<?> addToCart(@RequestBody Product product) throws AccountException{
@@ -110,7 +110,7 @@ if(orderList.isEmpty()) {
 		List<Product> productListToBeAdded=accountService.addProductToCart(product);
 		
 if(productListToBeAdded.isEmpty()) {
-			
+	logger.warn("productList is empty");
 			return new ResponseEntity("No Product Present", HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}else
@@ -137,7 +137,7 @@ if(productListToBeAdded.isEmpty()) {
 		List<Product> productList=accountService.viewProductsInCart();
 		
 if(productList.isEmpty()) {
-			
+	logger.warn("productList is empty");
 			return new ResponseEntity("No Orders Present", HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}else

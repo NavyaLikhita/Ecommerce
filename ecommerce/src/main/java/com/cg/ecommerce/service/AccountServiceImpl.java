@@ -51,14 +51,21 @@ public class AccountServiceImpl implements AccountService {
 	List<Product> productList=new ArrayList<Product>();
 	List<Order> orderList=new ArrayList<Order>();
 
+	
+	/*
+	 * Author: NAVYA Description:view the orders 
+	 */
 	@Override
 	public List<Order> viewMyOrders() {
 		// TODO Auto-generated method stub
 
-		
+		logger.info("in account service view orders");
 
 		return orderList;
 	}
+	/*
+	 * Author: NAVYA Description:modify account
+	 */
 
 	@Override
 	public Account modifyAccountDetails(Account account) {
@@ -72,27 +79,40 @@ public class AccountServiceImpl implements AccountService {
 
 		return accountRepository.save(accountToBeModified);
 	}
-
+	/*
+	 * Author: NAVYA Description:add account
+	 */
 	@Override
 	public Account addAccount(Account account) {
 		// TODO Auto-generated method stub
 
+		logger.info("in  service add account");
+		
 		return accountRepository.save(account);
 	}
-
+	/*
+	 * Author: NAVYA Description:remove account
+	 */
 	@Override
 	public boolean removeAccount(Long accountId) {
 		// TODO Auto-generated method stub
 
+		logger.info("in  service remove account");
+		
 		accountRepository.deleteById(accountId);
 		
 		return true;
 	}
+	/*
+	 * Author: NAVYA Description:To add product to cart
+	 */
 
 	@Override
 	public List<Product> addProductToCart(Product product) throws AccountException {
 		// TODO Auto-generated method stub
 
+		logger.info("in  service add product to cart");
+		
 		Product productToBeAdded = productRepository.findByProductId(product.getProductId());
 		
 		if (productToBeAdded == null) {
@@ -109,21 +129,28 @@ public class AccountServiceImpl implements AccountService {
 		}
 
 	}
-
+	/*
+	 * Author: NAVYA Description:display the prdouct in cart
+	 */
 	@Override
 	public List<Product> viewProductsInCart() {
 		// TODO Auto-generated method stub
 		
 		
-		
+		logger.info("in  service view product in cart");
 		
 		
 		return productList;
 	}
 
+	/*
+	 * Author: NAVYA Description:remove the products from cart
+	 */
 	@Override
 	public List<Product> removeProductFromCart(Long productId) throws AccountException {
 		// TODO Auto-generated method stub
+		
+		logger.info("in  service remove from product");
 		Iterator<Product> iterator = productList.iterator();
 		while (iterator.hasNext()) {
 			Product productFound = iterator.next();
@@ -138,14 +165,19 @@ public class AccountServiceImpl implements AccountService {
 				
 				
 			}
-		} // not properly done
+		} 
 
 		return productList;
 	}
 
+	
+	/*
+	 * Author: NAVYA Description:to get the price from the cart product  
+	 */
 	@Override
 	public Double showTotalPrice() {
 		// TODO Auto-generated method stub
+		logger.info("in  service show total price");
 		Double totalPrice = 0.0;
 
 		Iterator<Product> iterator = productList.iterator();
@@ -166,9 +198,14 @@ public class AccountServiceImpl implements AccountService {
 		return false;
 	}
 
+	
+	/*
+	 * Author: NAVYA Description:add order to the account order
+	 */
 	@Override
 	public List<Order> addMyOrder(Order order) throws AccountException {
 		// TODO Auto-generated method stub
+		logger.info("in add order to account order");
 		Order orderToBeAdded = orderRepository.findByOrderId(order.getOrderId());
 		if (orderToBeAdded == null) {
 
@@ -193,10 +230,13 @@ public class AccountServiceImpl implements AccountService {
 		return accountRepository.save(account);
 	}
 
+	/*
+	 * Author: NAVYA Description:search the account using account id 
+	 */
 	@Override
 	public Account searchAccount(Long accountId) {
 		// TODO Auto-generated method stub
-		
+		logger.info("in service search account");
 		Account accountToBeFound=accountRepository.findByAccountId(accountId);
 		
 		return accountToBeFound;

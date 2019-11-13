@@ -4,21 +4,29 @@
 package com.cg.ecommerce.dto;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * @author NAVYA
@@ -26,7 +34,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity(name="account")
-
+@EntityListeners({ AuditingEntityListener.class })
 public class Account {
 
 	/**
@@ -59,6 +67,19 @@ public class Account {
 	private String emailId;
 
 	
+	@CreatedBy
+	protected String createdBy;
+
+	@CreatedDate
+	@Temporal(TemporalType.TIMESTAMP)
+	protected Date creationDate;
+
+	@LastModifiedBy
+	protected String lastModifiedBy;
+
+	@LastModifiedDate
+	protected String lastModifiedDate;
+	
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<Product> productList;
 	
@@ -81,8 +102,8 @@ public class Account {
 			@NotEmpty(message = "First name cannot be empty") String firstName,
 			@NotEmpty(message = "Last Name cannot be empty") String lastName,
 			@NotNull(message = "Phone Number cannot be empty") Long phoneNumber,
-			@NotEmpty(message = "Account Id cannot be empty") String emailId, List<Product> productList,
-			List<Order> orderList) {
+			@NotEmpty(message = "Account Id cannot be empty") String emailId, String createdBy, Date creationDate,
+			String lastModifiedBy, String lastModifiedDate, List<Product> productList, List<Order> orderList) {
 		super();
 		this.accountId = accountId;
 		this.username = username;
@@ -92,6 +113,10 @@ public class Account {
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
 		this.emailId = emailId;
+		this.createdBy = createdBy;
+		this.creationDate = creationDate;
+		this.lastModifiedBy = lastModifiedBy;
+		this.lastModifiedDate = lastModifiedDate;
 		this.productList = productList;
 		this.orderList = orderList;
 	}
@@ -211,6 +236,62 @@ public class Account {
 
 
 
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+
+
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+
+
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+
+
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
+
+
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+
+
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+
+
+
+	public String getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+
+
+
+	public void setLastModifiedDate(String lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+
+
+
 	public List<Product> getProductList() {
 		return productList;
 	}
@@ -243,12 +324,15 @@ public class Account {
 	public String toString() {
 		return "Account [accountId=" + accountId + ", username=" + username + ", password=" + password
 				+ ", accountType=" + accountType + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", phoneNumber=" + phoneNumber + ", emailId=" + emailId + ", productList=" + productList
-				+ ", orderList=" + orderList + "]";
+				+ ", phoneNumber=" + phoneNumber + ", emailId=" + emailId + ", createdBy=" + createdBy
+				+ ", creationDate=" + creationDate + ", lastModifiedBy=" + lastModifiedBy + ", lastModifiedDate="
+				+ lastModifiedDate + ", productList=" + productList + ", orderList=" + orderList + "]";
 	}
 
 
 
+
+	
 
 	
 	

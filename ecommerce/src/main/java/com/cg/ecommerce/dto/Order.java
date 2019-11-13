@@ -10,6 +10,7 @@ import javax.persistence.Column;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -28,6 +34,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  */
 @Entity(name="orders")
+@EntityListeners({ AuditingEntityListener.class })
 public class Order {
 
 	/**
@@ -65,6 +72,19 @@ public class Order {
 	@Column(name="payment")
 	private boolean payment;
 	
+	
+	@CreatedBy
+	protected String createdBy;
+
+	@CreatedDate
+	@Temporal(TemporalType.TIMESTAMP)
+	protected Date creationDate;
+
+	@LastModifiedBy
+	protected String lastModifiedBy;
+
+	@LastModifiedDate
+	protected String lastModifiedDate;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "account_id")
 	private Account account;
@@ -76,7 +96,8 @@ public class Order {
 	public Order(Long orderId, @NotEmpty(message = "Street Cannot be empty") String streetLine1, String streetLine2,
 			@NotEmpty(message = "Zipcode Cannot be empty") Long zipCode,
 			@NotEmpty(message = "State Cannot be empty") String state, Date orderedDateTime,
-			LocalDateTime expectedArrivalTime, String orderStatus, boolean payment, Account account) {
+			LocalDateTime expectedArrivalTime, String orderStatus, boolean payment, String createdBy, Date creationDate,
+			String lastModifiedBy, String lastModifiedDate, Account account) {
 		super();
 		this.orderId = orderId;
 		this.streetLine1 = streetLine1;
@@ -87,6 +108,10 @@ public class Order {
 		this.expectedArrivalTime = expectedArrivalTime;
 		this.orderStatus = orderStatus;
 		this.payment = payment;
+		this.createdBy = createdBy;
+		this.creationDate = creationDate;
+		this.lastModifiedBy = lastModifiedBy;
+		this.lastModifiedDate = lastModifiedDate;
 		this.account = account;
 	}
 
@@ -162,6 +187,38 @@ public class Order {
 		this.payment = payment;
 	}
 
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public String getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(String lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
 	public Account getAccount() {
 		return account;
 	}
@@ -175,7 +232,8 @@ public class Order {
 		return "Order [orderId=" + orderId + ", streetLine1=" + streetLine1 + ", streetLine2=" + streetLine2
 				+ ", zipCode=" + zipCode + ", state=" + state + ", orderedDateTime=" + orderedDateTime
 				+ ", expectedArrivalTime=" + expectedArrivalTime + ", orderStatus=" + orderStatus + ", payment="
-				+ payment + ", account=" + account + "]";
+				+ payment + ", createdBy=" + createdBy + ", creationDate=" + creationDate + ", lastModifiedBy="
+				+ lastModifiedBy + ", lastModifiedDate=" + lastModifiedDate + ", account=" + account + "]";
 	}
 
 	

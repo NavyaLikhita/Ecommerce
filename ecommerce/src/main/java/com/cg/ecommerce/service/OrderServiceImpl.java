@@ -37,17 +37,27 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	AccountRepository accountRepository;
 
+	
+	/*
+	 * Author: NAVYA Description:to add  order 
+	 */
 	@Override
 	public Order addOrder(Order order) {
 		// TODO Auto-generated method stub
+		
+		logger.info("in service add order");
 		return orderRepository.save(order);
 	}
+	
+	/*
+	 * Author: NAVYA Description:to display all the orders 
+	 */
 
 	@Override
 	public List<Order> showAllOrder() throws OrderException {
 		// TODO Auto-generated method stub
 
-		
+		logger.info("in service show order");
 		List<Order> orderList=orderRepository.findAll();
 		if(orderList.isEmpty()) {
 			
@@ -58,10 +68,15 @@ public class OrderServiceImpl implements OrderService {
 		return orderList;
 	}
 
+	
+	/*
+	 * Author: NAVYA Description:to view the order through id
+	 */
 	@Override
 	public Order viewOrder(Long orderId) throws OrderException {
 		// TODO Auto-generated method stub
 		
+		logger.info("in service view all the orders");
 		
 		Order orderFound=orderRepository.findByOrderId(orderId);
 		if(orderFound==null) {
@@ -87,13 +102,7 @@ public class OrderServiceImpl implements OrderService {
 //		return orderList; // see how
 //	}
 
-	@Override
-	public Order modifyOrder(Order order) {
-		// TODO Auto-generated method stub
-
-		return null;
-	}
-
+	
 	/**
 	 * 
 	 */

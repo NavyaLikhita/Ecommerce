@@ -33,6 +33,9 @@ public class ProductServiceImpl implements ProductService {
 	ProductRepository productRepository;
 	
 	
+	/*
+	 * Author: NAVYA Description:to add product 
+	 */
 	@Override
 	public Product addProduct(Product product) {
 		// TODO Auto-generated method stub
@@ -43,7 +46,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	
-
+	/*
+	 * Author: NAVYA Description:to modify the project
+	 */
 	@Override
 	public Product modifyProduct(Product product) throws ProductException {
 		// TODO Auto-generated method stub
@@ -63,6 +68,10 @@ if(productToBeModified==null) {
 		
 		return productRepository.save(productToBeModified);
 	}
+	
+	/*
+	 * Author: NAVYA Description:to remove prouct
+	 */
 
 	@Override
 	public boolean removeProduct(Long productId) {
@@ -75,14 +84,18 @@ if(productToBeModified==null) {
 	}
 
 
-
+	/*
+	 * Author: NAVYA Description:to  show all the products
+	 */
 	@Override
 	public List<Product> showProduct() {
 		// TODO Auto-generated method stub
 		return productRepository.findAll();
 	}
 
-
+	/*
+	 * Author: NAVYA Description:to search products using id
+	 */
 
 	@Override
 	public Product searchProduct(Long productId) {

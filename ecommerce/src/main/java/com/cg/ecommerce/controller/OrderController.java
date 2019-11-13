@@ -52,7 +52,7 @@ public class OrderController {
 		Order orderToBeAdded=orderService.addOrder(order);
 		
 if(orderToBeAdded==null) {
-			
+	logger.warn("order not present");
 			return new ResponseEntity("Order Not Added", HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}else
@@ -75,7 +75,7 @@ if(orderToBeAdded==null) {
 		List<Order> orderList=orderService.showAllOrder();
 		
 if(orderList.isEmpty()) {
-			
+	logger.warn("orderList is empty");
 			return new ResponseEntity("No Orders Present", HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}else
@@ -99,7 +99,7 @@ if(orderList.isEmpty()) {
 		
 		Order order=orderService.viewOrder(orderId);
 if(order==null) {
-			
+	logger.warn("order is present");
 			return new ResponseEntity("No Orders", HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}else
